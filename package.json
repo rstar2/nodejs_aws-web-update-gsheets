@@ -1,0 +1,26 @@
+{
+  "name": "aws-gsheets-htmlform",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sls:dev": "sls offline start",
+    "sls:deploy": "sls deploy",
+    "dev": "npm run sls:dev"
+  },
+  "keywords": [],
+  "author": "Rumen Neshev <rstardev@abv.bg>",
+  "license": "MIT",
+  "dependencies": {
+    "aws-serverless-express": "^3.3.8",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "googleapis": "^60.0.1"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.764.0",
+    "serverless-layers": "^2.3.0",
+    "serverless-offline": "^6.8.0"
+  }
+}

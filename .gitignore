@@ -1,0 +1,34 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Dependency directories
+**/node_modules
+**/jspm_packages
+
+**/.webpack
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Serverless
+.serverless
+
+# env
+env.yml
+.env
+
+# IDEs
+.idea
+
+# The Google API credentials file
+google-credentials-AWS Google Sheets.json
