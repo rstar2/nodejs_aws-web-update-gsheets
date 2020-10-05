@@ -2,14 +2,14 @@ const fs = require('fs');
 const readline = require('readline');
 const { google } = require('googleapis');
 
-const CREDENTIALS_FILE = require('../google-credentials-AWS Google Sheets.json');
+const CREDENTIALS_FILE = require(process.env.GOOGLE_CREDENTIALS_FILE || '../google-credentials.json');
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
-const TOKEN_PATH = 'token.json';
+const TOKEN_PATH = 'google-token.json';
 
 
 // Authorize a client with credentials, then call the Google Sheets API.
@@ -29,7 +29,7 @@ function authorize(credentials, callback) {
     // Check if we have previously stored a token.
     fs.readFile(TOKEN_PATH, (err, token) => {
         if (err) return getNewToken(oAuth2Client, callback);
-        
+
         oAuth2Client.setCredentials(JSON.parse(token));
         callback(oAuth2Client);
     });

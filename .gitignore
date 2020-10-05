@@ -31,4 +31,6 @@ env.yml
 .idea
 
 # The Google API credentials file
-google-credentials-AWS Google Sheets.json
+google-credentials.json
+# The Google API AuthToken createdd from the credentials file
+google-token.json
