@@ -1,5 +1,13 @@
 
-// const gSheetsCommander = require('./lib/gsheets');
+const path = require('path');
+
+// Must be full path to the credentials file
+const CREDENTIALS_FILE = path.resolve(
+    __dirname,
+    'google-service-account-credentials.json'
+);
+
+const gSheets = require('./lib/gsheets')(CREDENTIALS_FILE);
 
 /**
  * Handle messages from the AWS SQS service 
@@ -19,7 +27,7 @@ exports.handler = async (event, context) => {
 
         console.log(`Inserting into Google Sheet ${gsheetId}, data:`, data);
       
-        // await gSheetsCommander.add(gsheetId, data);
+        await gSheets.append(gsheetId, data);
       
         // Throttle for the Google API
         await throttle();

@@ -31,10 +31,11 @@ app.post('/update/:gsheetId', async (req, res) => {
     const { gsheetId } = req.params; // The Google Sheet ID
     const data = req.body; // The post body
 
-    // TODO: Validation
+    // Validation
 
     // 1. Form data ....
-    if (!gsheetId) throw new Error('Invalid form data');
+    if (!data.name || !data.email)
+        throw new Error('Invalid form data');
     // 2. Proper permissions tot update the sheet
 
     const message = { gsheetId, data };

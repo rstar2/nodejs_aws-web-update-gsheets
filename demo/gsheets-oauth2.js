@@ -2,24 +2,27 @@ const fs = require('fs');
 const readline = require('readline');
 const { google } = require('googleapis');
 
-const CREDENTIALS_FILE = require(process.env.GOOGLE_CREDENTIALS_FILE || '../google-credentials.json');
+const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID;
+
+const CREDENTIALS = require(process.env.GOOGLE_OAUTH2_CREDENTIALS_FILE ||
+    '../google-oauth2-client-credentials.json');
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
-const TOKEN_PATH = 'google-token.json';
+const TOKEN_PATH = process.env.GOOGLE_OAUTH2_TOKEN_FILE || 'google-oauth2-client-token.json';
 
 
 // Authorize a client with credentials, then call the Google Sheets API.
-authorize(CREDENTIALS_FILE, ready);
+authorize(CREDENTIALS, ready);
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
  * given callback function.
  * @param {Object} credentials The authorization client credentials.
- * @param {function} callback The callback to call with the authorized client.
+ * @param {Function} callback The callback to call with the authorized client.
  */
 function authorize(credentials, callback) {
     const {client_secret, client_id, redirect_uris} = credentials.installed;
@@ -39,7 +42,7 @@ function authorize(credentials, callback) {
    * Get and store new token after prompting for user authorization, and then
    * execute the given callback with the authorized OAuth2 client.
    * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
-   * @param {getEventsCallback} callback The callback for the authorized client.
+   * @param {Function} callback The callback for the authorized client.
    */
 function getNewToken(oAuth2Client, callback) {
     const authUrl = oAuth2Client.generateAuthUrl({
@@ -67,10 +70,17 @@ function getNewToken(oAuth2Client, callback) {
 }
 
 /**
- * Prints the names and majors of students in a sample spreadsheet:
- * @see https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
  */
-function ready() {
+function ready(auth) {
+    console.log('Ready');
 
+    const sheets = google.sheets({version: 'v4', auth});
+    sheets.spreadsheets.values.get({
+        spreadsheetId: GOOGLE_SHEET_ID,
+        range: 'Sheet1!A2:D',
+    }, (err, res) => {
+        if (err) return console.log('The API returned an error: ' + err);
+        console.log('Data:', res.data.values);
+    });
 }

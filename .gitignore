@@ -30,7 +30,9 @@ env.yml
 # IDEs
 .idea
 
-# The Google API credentials file
-google-credentials.json
-# The Google API AuthToken createdd from the credentials file
-google-token.json
+# The Google API credentials:
+# For OAuth2 client
+google-oauth2-client-credentials.json
+google-oauth2-client-token.json
+# For Service Account
+google-service-account-credentials.json
